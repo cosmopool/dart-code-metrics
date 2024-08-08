@@ -31,3 +31,6 @@ doc/api/
 
 .vscode/launch.json
 test/fake_test.dart
+
+# FVM Version Cache
+.fvm/

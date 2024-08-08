@@ -1,3 +1,5 @@
+import '../analyzers/class_utilization_analyzer/class_utilization_analysis_config.dart';
+import '../analyzers/class_utilization_analyzer/class_utilization_config.dart';
 import '../analyzers/lint_analyzer/anti_patterns/patterns_factory.dart';
 import '../analyzers/lint_analyzer/lint_analysis_config.dart';
 import '../analyzers/lint_analyzer/lint_config.dart';
@@ -109,6 +111,36 @@ class ConfigBuilder {
         excludePatterns,
         isMonorepo: isMonorepo,
         shouldPrintConfig: shouldPrintConfig,
+      );
+
+  /// Creates a raw unused code config from given [excludePatterns].
+  static ClassUtilizationConfig getClassUtilizationConfigFromArgs(
+    Iterable<String> excludePatterns, {
+    required bool isMonorepo,
+    required bool shouldPrintConfig,
+  }) =>
+      ClassUtilizationConfig.fromArgs(
+        excludePatterns,
+        isMonorepo: isMonorepo,
+        shouldPrintConfig: shouldPrintConfig,
+      );
+
+
+  /// Creates a raw unused code config from given [options].
+  static ClassUtilizationConfig getClassUtilizationConfigFromOption(
+    AnalysisOptions options,
+  ) =>
+      ClassUtilizationConfig.fromAnalysisOptions(options);
+
+  /// Creates an unused code config from given raw [config].
+  static ClassUtilizationAnalysisConfig getClassUtilizationConfig(
+    ClassUtilizationConfig config,
+    String rootPath,
+  ) =>
+      ClassUtilizationAnalysisConfig(
+        createAbsolutePatterns(config.excludePatterns, rootPath),
+        createAbsolutePatterns(config.analyzerExcludePatterns, rootPath),
+        isMonorepo: config.isMonorepo,
       );
 
   /// Creates a raw unused code config from given [options].
